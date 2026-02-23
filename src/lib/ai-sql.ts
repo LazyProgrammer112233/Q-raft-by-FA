@@ -1,9 +1,10 @@
 import type { SqlGeneration } from '../store/useAppStore';
 import * as pdfjsLib from 'pdfjs-dist';
+import pdfWorker from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
 import mammoth from 'mammoth';
 
-// Use CDN for PDF.js worker to avoid Vite build issues
-pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.mjs`;
+// Use local worker via Vite to avoid CDN fetch issues
+pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorker;
 
 const PROMPT = `
 You are an expert Data Engineer working for Field Assist.
