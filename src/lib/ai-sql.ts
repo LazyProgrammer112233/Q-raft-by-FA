@@ -82,6 +82,16 @@ export async function generateSqlGenerations(fileBufferBase64: string, fileName:
   }
 
   const apiKey = import.meta.env.VITE_GROQ_API_KEY;
+
+  // DEBUG VERCEL DEPLOYMENT: Log the state of the API key
+  console.log("DEBUG: VITE_GROQ_API_KEY Type: ", typeof apiKey);
+  console.log("DEBUG: VITE_GROQ_API_KEY Length: ", apiKey?.length || 'N/A');
+  if (apiKey) {
+    console.log("DEBUG: VITE_GROQ_API_KEY Starts With: ", apiKey.substring(0, 4) + '...');
+  } else {
+    console.log("DEBUG: VITE_GROQ_API_KEY is undefined or empty in this environment!");
+  }
+
   const apiUrl = 'https://api.groq.com/openai/v1/chat/completions';
 
   const payload = {

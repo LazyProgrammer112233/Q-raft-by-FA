@@ -119,14 +119,14 @@ export default function UploadDropzone() {
             <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="glass-panel rounded-3xl p-16 flex flex-col items-center justify-center text-center h-[400px] relative overflow-hidden ring-1 ring-white/10"
+                className="glass-panel rounded-3xl p-16 flex flex-col items-center justify-center text-center min-h-[400px] relative overflow-hidden ring-1 ring-white/10"
             >
                 {/* Ambient pulse effect behind loader */}
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-primary-500/20 rounded-full blur-[80px] animate-pulse" />
 
                 <div className="relative z-10 flex flex-col items-center pt-8">
-                    {/* Increased mb to a large value (mb-32) to ensure the gap is very visible */}
-                    <div className="relative mb-32 mt-4">
+                    {/* Adjusted mb from 32 to 20 to prevent excessive overflow while maintaining spacious design */}
+                    <div className="relative mb-20 mt-4">
                         <div className="w-20 h-20 bg-slate-900/80 backdrop-blur rounded-2xl shadow-xl flex items-center justify-center relative z-10 ring-1 ring-white/20 text-white">
                             <Sparkles className="w-8 h-8 text-primary-400 animate-pulse" />
                         </div>
@@ -157,7 +157,7 @@ export default function UploadDropzone() {
     return (
         <div
             {...getRootProps()}
-            className={`glass-panel border-2 border-dashed rounded-[2rem] p-16 flex flex-col items-center justify-center text-center transition-all duration-300 cursor-pointer h-[400px] group relative overflow-hidden
+            className={`glass-panel border-2 border-dashed rounded-[2rem] p-16 flex flex-col items-center justify-center text-center transition-all duration-300 cursor-pointer min-h-[400px] group relative overflow-hidden
         ${isDragActive ? 'border-primary-400 bg-primary-900/30 shadow-[0_0_40px_rgba(56,149,231,0.3)]' : 'border-white/20 hover:border-primary-500/80 hover:bg-slate-800/60 hover:shadow-premium'}`}
         >
             <input {...getInputProps()} />
