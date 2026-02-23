@@ -85,7 +85,7 @@ export async function generateSqlGenerations(fileBufferBase64: string, fileName:
   const apiUrl = 'https://api.groq.com/openai/v1/chat/completions';
 
   const payload = {
-    model: "llama3-70b-8192",
+    model: "llama-3.3-70b-versatile",
     messages: [
       { role: "system", content: PROMPT },
       { role: "user", content: `Please analyze the following document text and generate the SQL:\n\n${extractedText}` }
