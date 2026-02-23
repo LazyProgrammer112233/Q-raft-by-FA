@@ -47,7 +47,7 @@ export default function Landing() {
     }
 
     return (
-        <div className="relative w-screen h-screen overflow-hidden bg-[#030712] flex flex-col items-center justify-center p-4">
+        <div className="relative w-full min-h-screen overflow-x-hidden overflow-y-auto bg-[#030712] flex flex-col items-center justify-center p-4 py-12 md:p-8">
             {/* Interactive Cursor-following Blob - Fixed Visibility */}
             <motion.div
                 className="absolute top-0 left-0 w-[200px] h-[200px] bg-primary-400/60 rounded-full blur-[60px] pointer-events-none mix-blend-screen z-0"
