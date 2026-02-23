@@ -1,0 +1,13 @@
+{
+    "name": "qraft",
+    "alias": [
+        "qraft.insforge.site",
+        "qraft"
+    ],
+    "rewrites": [
+        {
+            "source": "/(.*)",
+            "destination": "/index.html"
+        }
+    ]
+}

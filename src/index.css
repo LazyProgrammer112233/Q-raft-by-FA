@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-[#030712] text-slate-200 antialiased font-sans overflow-x-hidden selection:bg-primary-500/30 selection:text-primary-100;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-slate-900/40 backdrop-blur-xl border border-white/10 shadow-[0_8px_30px_#00000080] transition-all duration-300;
+  }
+
+  .glass-panel {
+    @apply bg-slate-900/50 backdrop-blur-2xl border border-white/10 shadow-2xl shadow-primary-900/20 transition-all duration-300;
+  }
+
+  .glass-dark {
+    @apply bg-black/60 backdrop-blur-2xl border border-white/5 shadow-2xl;
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary-400 to-blue-300;
+  }
+
+  .btn-primary {
+    @apply bg-gradient-to-r from-primary-600 to-primary-500 text-white font-medium rounded-xl shadow-[0_0_20px_#3895e766] hover:shadow-[0_0_30px_#3895e799] hover:-translate-y-0.5 transition-all duration-300 active:scale-95 border border-primary-400/50;
+  }
+}
