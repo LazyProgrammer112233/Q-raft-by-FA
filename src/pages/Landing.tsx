@@ -1,5 +1,4 @@
-import { Auth } from '@supabase/auth-ui-react';
-import { ThemeSupa } from '@supabase/auth-ui-shared';
+
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../components/AuthProvider';
 import { Navigate } from 'react-router-dom';
@@ -103,13 +102,8 @@ export default function Landing() {
                             <div className="absolute inset-0 h-full w-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] pointer-events-none" />
                         </button>
                     ) : (
-                        <div className="bg-slate-900/80 p-6 rounded-2xl w-full max-w-sm backdrop-blur-xl border border-white/10 shadow-2xl">
-                            <Auth
-                                supabaseClient={supabase}
-                                appearance={{ theme: ThemeSupa }}
-                                providers={[]}
-                                theme="dark"
-                            />
+                        <div className="bg-slate-900/80 p-6 rounded-2xl w-full max-w-sm backdrop-blur-xl border border-white/10 shadow-2xl relative z-30">
+                            <AuthForm />
                         </div>
                     )}
                 </motion.div>
@@ -149,5 +143,48 @@ function FeatureCard({ icon, title, description }: { icon: React.ReactNode, titl
                 <p className="text-slate-400 text-sm leading-relaxed mt-1">{description}</p>
             </div>
         </div>
+    );
+}
+
+function AuthForm() {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [isSignUp, setIsSignUp] = useState(false);
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
+
+    const handleAuth = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setLoading(true);
+        setError('');
+        const { error } = isSignUp
+            ? await supabase.auth.signUp({ email, password })
+            : await supabase.auth.signInWithPassword({ email, password });
+        if (error) setError(error.message);
+        setLoading(false);
+    };
+
+    return (
+        <form onSubmit={handleAuth} className="flex flex-col gap-4 text-left w-full text-slate-200">
+            <h3 className="text-xl font-bold text-white mb-2">{isSignUp ? 'Create an account' : 'Sign In'}</h3>
+            {error && <div className="text-red-400 text-sm bg-red-400/10 p-3 rounded-lg border border-red-400/20">{error}</div>}
+            <div>
+                <label className="block text-sm font-medium text-slate-300 mb-1.5">Email</label>
+                <input type="email" value={email} onChange={e => setEmail(e.target.value)} required className="w-full bg-slate-950/50 border border-slate-700/50 rounded-xl px-4 py-2.5 text-white outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500 transition-all placeholder:text-slate-600" placeholder="you@example.com" />
+            </div>
+            <div>
+                <label className="block text-sm font-medium text-slate-300 mb-1.5">Password</label>
+                <input type="password" value={password} onChange={e => setPassword(e.target.value)} required minLength={6} className="w-full bg-slate-950/50 border border-slate-700/50 rounded-xl px-4 py-2.5 text-white outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500 transition-all placeholder:text-slate-600" placeholder="••••••••" />
+            </div>
+            <button type="submit" disabled={loading} className="btn-primary w-full py-3 mt-2 rounded-xl text-sm font-medium">
+                {loading ? 'Processing...' : (isSignUp ? 'Sign Up' : 'Sign In')}
+            </button>
+            <p className="text-sm text-slate-400 text-center mt-3 font-medium">
+                {isSignUp ? 'Already have an account?' : "Don't have an account?"}{' '}
+                <button type="button" onClick={() => setIsSignUp(!isSignUp)} className="text-primary-400 hover:text-primary-300 hover:underline transition-all">
+                    {isSignUp ? 'Sign In' : 'Sign Up'}
+                </button>
+            </p>
+        </form>
     );
 }

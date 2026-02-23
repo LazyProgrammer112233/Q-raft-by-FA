@@ -11,15 +11,13 @@
   },
   "dependencies": {
     "@monaco-editor/react": "^4.7.0",
-    "@supabase/auth-ui-react": "^0.4.7",
-    "@supabase/auth-ui-shared": "^0.1.8",
     "@supabase/supabase-js": "^2.97.0",
     "framer-motion": "^12.34.3",
     "lucide-react": "^0.575.0",
     "mammoth": "^1.11.0",
     "pdfjs-dist": "^5.4.624",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
     "react-dropzone": "^15.0.0",
     "react-router-dom": "^7.13.0",
     "zustand": "^5.0.11"
@@ -27,7 +25,7 @@
   "devDependencies": {
     "@eslint/js": "^9.39.1",
     "@types/node": "^24.10.1",
-    "@types/react": "^19.2.7",
+    "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.1",
     "autoprefixer": "^10.4.24",
