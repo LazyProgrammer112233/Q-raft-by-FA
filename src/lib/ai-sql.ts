@@ -81,15 +81,15 @@ export async function generateSqlGenerations(fileBufferBase64: string, fileName:
     throw new Error("No text could be extracted from the document.");
   }
 
-  const apiKey = import.meta.env.VITE_GROQ_API_KEY;
+  const apiKey = import.meta.env.VITE_GROQ_AUTH_TOKEN;
 
   // DEBUG VERCEL DEPLOYMENT: Log the state of the API key
-  console.log("DEBUG: VITE_GROQ_API_KEY Type: ", typeof apiKey);
-  console.log("DEBUG: VITE_GROQ_API_KEY Length: ", apiKey?.length || 'N/A');
+  console.log("DEBUG: VITE_GROQ_AUTH_TOKEN Type: ", typeof apiKey);
+  console.log("DEBUG: VITE_GROQ_AUTH_TOKEN Length: ", apiKey?.length || 'N/A');
   if (apiKey) {
-    console.log("DEBUG: VITE_GROQ_API_KEY Starts With: ", apiKey.substring(0, 4) + '...');
+    console.log("DEBUG: VITE_GROQ_AUTH_TOKEN Starts With: ", apiKey.substring(0, 4) + '...');
   } else {
-    console.log("DEBUG: VITE_GROQ_API_KEY is undefined or empty in this environment!");
+    console.log("DEBUG: VITE_GROQ_AUTH_TOKEN is undefined or empty in this environment!");
   }
 
   const apiUrl = 'https://api.groq.com/openai/v1/chat/completions';
