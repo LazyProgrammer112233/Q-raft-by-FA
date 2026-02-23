@@ -81,7 +81,7 @@ export async function generateSqlGenerations(fileBufferBase64: string, fileName:
     throw new Error("No text could be extracted from the document.");
   }
 
-  const apiKey = 'PLACE_YOUR_GROQ_API_KEY_HERE';
+  const apiKey = import.meta.env.VITE_GROQ_API_KEY;
   const apiUrl = 'https://api.groq.com/openai/v1/chat/completions';
 
   const payload = {
