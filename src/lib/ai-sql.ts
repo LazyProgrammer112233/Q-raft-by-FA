@@ -7,20 +7,35 @@ import mammoth from 'mammoth';
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorker;
 
 const PROMPT = `
-You are an expert Data Engineer working for Field Assist.
-You need to analyze the following business requirement document and extract ALL required analytical tasks.
+You are an Expert Data Engineer specializing in multi-dialect SQL optimization.
+You will analyze the following business requirement document and extract ALL required analytical tasks.
 
 For EACH task you detect, you MUST generate the EXACT SQL query for three different dialects: 
 1. ClickHouse
 2. Trino
 3. PostgreSQL
 
-You MUST enforce these SQL differences:
-- ClickHouse: Uses specific date functions (toStartOfMonth, etc.), Array functions, and strict type casting.
-- Trino: Presto/Trino syntax, strict typing, different date functions (date_trunc).
-- Postgres: Standard PG syntax.
+CRITICAL RULE: The three queries you generate MUST NOT BE IDENTICAL. You are strictly forbidden from using generic ANSI SQL that works on all three. You must use the most highly-optimized, engine-specific syntax for each.
 
-IMPORTANT: The SQL queries you write will naturally contain newlines and quotes. Because you are returning a JSON payload, you MUST properly escape all newlines ('\\n') and quotes ('\\"') inside the JSON string values. DO NOT include raw/unescaped newlines or control characters that would break JSON.parse().
+You MUST enforce these SQL differences:
+- ClickHouse: 
+  - MUST use \`toStartOfMonth()\`, \`toStartOfWeek()\` for date truncation.
+  - MUST use \`uniqExact()\` instead of \`COUNT(DISTINCT)\` when applicable.
+  - MUST use \`argMax()\` or \`argMin()\` instead of window functions where possible.
+  - Use \`toUInt32()\` or \`toString()\` for explicit casting.
+  - Arrays use \`[1, 2, 3]\` and functions like \`arrayJoin()\`.
+- Trino: 
+  - MUST use \`date_trunc('month', date_col)\`.
+  - MUST use \`approx_distinct()\` for large distinct counts.
+  - MUST use \`max_by()\` or \`min_by()\`.
+  - Strictly use \`CAST(col AS varchar)\` or \`CAST(col AS integer)\`. Do NOT use \`::\` shorthand.
+- Postgres: 
+  - MUST use \`DATE_TRUNC('month', date_col)\`.
+  - MUST use \`STRING_AGG()\` for string concatenation aggregations.
+  - Use Postgres specific shorthand casting like \`col::VARCHAR\` or \`col::INT\`.
+  - Window functions \`OVER (PARTITION BY ...)\` are preferred here over array functions.
+
+IMPORTANT: Because you are returning a JSON payload, you MUST properly escape all newlines ('\\n') and quotes ('\\"') inside the JSON string values. DO NOT include raw/unescaped newlines or control characters that would break JSON.parse().
 
 Respond with ONLY a valid JSON array of objects. Do not include any markdown formatting (no \`\`\`json). The JSON must exactly match this structure:
 [
