@@ -108,7 +108,10 @@ export default function UploadDropzone() {
         accept: {
             'application/pdf': ['.pdf'],
             'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'],
-            'text/plain': ['.txt']
+            'text/plain': ['.txt'],
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx'],
+            'application/vnd.ms-excel': ['.xls'],
+            'text/csv': ['.csv']
         },
         maxFiles: 1,
         disabled: isAnalyzing
@@ -175,7 +178,7 @@ export default function UploadDropzone() {
                 </h3>
 
                 <p className="text-slate-400 font-medium max-w-md">
-                    Accepted formats: <span className="text-slate-200 font-semibold px-1">.pdf</span>, <span className="text-slate-200 font-semibold px-1">.docx</span>, <span className="text-slate-200 font-semibold px-1">.txt</span> (Max 10MB). <br className="hidden sm:block" />
+                    Accepted formats: <span className="text-slate-200 font-semibold px-1">.pdf</span>, <span className="text-slate-200 font-semibold px-1">.docx</span>, <span className="text-slate-200 font-semibold px-1">.txt</span>, <span className="text-slate-200 font-semibold px-1">.xlsx</span>, <span className="text-slate-200 font-semibold px-1">.csv</span> (Max 10MB). <br className="hidden sm:block" />
                     We'll instantly parse the tasks and build the queries.
                 </p>
 
@@ -185,6 +188,6 @@ export default function UploadDropzone() {
                     </span>
                 </div>
             </div>
-        </div>
+        </div >
     );
 }

@@ -2,6 +2,7 @@ import type { SqlGeneration } from '../store/useAppStore';
 import * as pdfjsLib from 'pdfjs-dist';
 import pdfWorker from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
 import mammoth from 'mammoth';
+import * as XLSX from 'xlsx';
 
 // Use local worker via Vite to avoid CDN fetch issues
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorker;
@@ -76,6 +77,17 @@ async function extractTextFromBase64(base64: string, fileName: string): Promise<
   if (fileExt === 'docx') {
     const result = await mammoth.extractRawText({ arrayBuffer: bytes.buffer });
     return result.value.trim();
+  }
+
+  if (fileExt === 'xlsx' || fileExt === 'xls' || fileExt === 'csv') {
+    const workbook = XLSX.read(bytes, { type: 'array' });
+    let fullText = '';
+    workbook.SheetNames.forEach(sheetName => {
+      const worksheet = workbook.Sheets[sheetName];
+      const csv = XLSX.utils.sheet_to_csv(worksheet);
+      fullText += `--- Sheet: ${sheetName} ---\n${csv}\n`;
+    });
+    return fullText.trim();
   }
 
   // Fallback for .txt or other formats: decode as utf-8
